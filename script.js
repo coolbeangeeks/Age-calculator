@@ -6,7 +6,9 @@ function showDivs() {
         }
 }
 
-
+function getDaysinMonth(year,month){
+    return new Date(year,month,0).getDate();
+}
 function showAge(){
     let x=document.getElementById('day-month-year').value;
     const xdate=new Date(x);
@@ -27,22 +29,20 @@ function showAge(){
     let diffyear=curr_year-xyear;
     let diffmonth=curr_month-xmonth;
     let diffday=curr_day-xday;
-    if(xmonth<curr_month){
-        diffmonth=(curr_month-xmonth)+12;
-        console.log(diffmonth);
-        diffyear+=Math.floor(diffmonth/12);
-        console.log(diffyear);
-        diffmonth=diffmonth%12;
-        console.log(diffmonth)
+    if(curr_month>xmonth){
+        diffmonth=curr_month-xmonth;
     }
-    else if(xmonth>curr_month){
-        diffmonth=(curr_month-xmonth)+12;
+    else{
+        diffyear--;
+        diffmonth=curr_month-xmonth+12;
     }
     if(diffday<curr_day){
         diffday=curr_day-diffday;
     }
-    else if(diffday>curr_day){
-        diffday=curr_day-diffday+30;
+    else{
+        diffmonth--;
+
+        diffday=curr_day-diffday+getDaysinMonth(xyear,xmonth);
     }
     
     document.querySelector('.year').innerHTML=`${diffyear}<br>Year`;
